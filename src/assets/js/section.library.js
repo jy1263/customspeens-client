@@ -14,6 +14,16 @@ if (filePath.endsWith('.zip')){
         }
     });   
 }
+else if (filePath.endsWith('.ogg')){
+    let fileName = path.basename(filePath);
+    let destination = path.join(userSettings.get('gameDirectory'), "AudioClips", fileName)
+    srxdControl.copyFileToDirectory(filePath,destination);
+}
+else if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpg')){
+    let fileName = path.basename(filePath);
+    let destination = path.join(userSettings.get('gameDirectory'), "AlbumArt", fileName)
+    srxdControl.copyFileToDirectory(filePath,destination);
+}
     else {console.error('Not a zip!');}
 }
 
