@@ -50,11 +50,17 @@ class SRXD {
         this.songTrackInfo = songTrackInfo;
     
         // Load OGG file
-        let oggFilesInBackupLocation = this.getFilesFromPath(path.join(this.backupLocation, "AudioClips"), ".ogg");
-        this.songLocation = path.join(this.backupLocation, oggFilesInBackupLocation[0]);
-    
+        let OggFilePath = fs.existsSync(path.join(this.backupLocation, "AudioClips"), ".ogg")
+        if (fs.existsSync(OggFilePath)) {
+            let oggFilesInBackupLocation = this.getFilesFromPath(OggFilePath);
+            this.songLocation = path.join(this.backupLocation, oggFilesInBackupLocation[0]);
+                
         // TODO: Backup Validation
         return this.backupLocation;
+        }
+        else{
+            return this.backupLocation;
+        }
     }
 
     async unloadBackup() {

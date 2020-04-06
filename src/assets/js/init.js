@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron');
-const { dialog, shell, app, clipboard } = require('electron').remote;
+const { dialog, shell, app, clipboard, process } = require('electron').remote;
 const isDev = require('electron-is-dev');
 const path = require('path');
 const SSAPI = require( path.resolve(__dirname, './assets/js/module.api.js') );
