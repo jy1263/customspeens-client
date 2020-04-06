@@ -2,7 +2,7 @@ const fs = require('fs');
 const rimraf = require('rimraf');
 const unzipper = require('unzipper');
 const uniqid = require('uniqid');
-
+const mime = require('mime');
 class SRXD {
     constructor() {
         this.backupLocation = "";
