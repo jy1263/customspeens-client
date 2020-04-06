@@ -2,6 +2,7 @@ const fs = require('fs');
 const rimraf = require('rimraf');
 const unzipper = require('unzipper');
 const uniqid = require('uniqid');
+const mime = require('mime');
 
 class SRXD {
     constructor() {
@@ -112,6 +113,9 @@ class SRXD {
     }
     getSongTrackInfo() {
         return this.songTrackInfo;
+    }
+    copyFileToDirectory(input, output){
+        fs.createReadStream(input).pipe(fs.createWriteStream(output));
     }
 }
 
