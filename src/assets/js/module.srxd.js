@@ -113,6 +113,12 @@ class SRXD {
     getSongTrackInfo() {
         return this.songTrackInfo;
     }
+    getMime(input) {
+        return mime.getType(input);
+    }
+    copyFileToDirectory(input, output){
+        fs.createReadStream(input).pipe(fs.createWriteStream(output));
+    }
 }
 
 module.exports = SRXD;

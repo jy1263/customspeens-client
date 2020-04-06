@@ -1,7 +1,7 @@
 const DOMLibrarySongsList = document.querySelector(".song-row-library .song-list");
-
 function ExtractionProcess(filePath) {
-if (filePath.endsWith('.zip')){
+let mimeType = srxdControl.getMime(filePath);
+if (mimeType == 'application/zip'){
     let fileName = path.basename(filePath);
     srxdControl.extractBackup(filePath, fileName).then(function(extractResults) {
         if(extractResults) {
@@ -13,6 +13,16 @@ if (filePath.endsWith('.zip')){
             console.error("Backup could not be loaded!");
         }
     });   
+}
+else if (mimeType == 'audio/ogg'){
+    let fileName = path.basename(filePath);
+    let destination = path.join(userSettings.get('gameDirectory'), "AudioClips", fileName)
+    srxdControl.copyFileToDirectory(filePath,destination);
+}
+else if (mimeType == 'image/png' || 'image/jpeg'){
+    let fileName = path.basename(filePath);
+    let destination = path.join(userSettings.get('gameDirectory'), "AlbumArt", fileName)
+    srxdControl.copyFileToDirectory(filePath,destination);
 }
     else {console.error('Not a zip!');}
 }
