@@ -30,7 +30,7 @@ function CheckForUpdates(showIfLatest) {
 }
 
 function DownloadUpdate() {
-    shell.openExternal("https://spinsha.re/download-client");
+    shell.openExternal("https://spinsha.re/client/download");
 }
 function IgnoreUpdate() {
     DOMUpdateOverlay.classList.remove("active");

@@ -10,18 +10,22 @@ if (!gotTheLock) {
   app.quit();
 } else {
   app.on('second-instance', (event, commandLine, workingDirectory) => {
-    if (process.platform == 'win32') {
-      let commandLineString = commandLine.slice(1) + '';
-      let commandLineArgs = commandLineString.split(",");
-      deeplinkingUrl = commandLineArgs[commandLineArgs.length - 1].replace("spinshare-song://", "").replace("/", "");
-    }
-
-    if (win) {
-      if (win.isMinimized()) win.restore();
-      win.focus();
-      win.webContents.executeJavaScript(`NavigateToSongDetail("${deeplinkingUrl}")`);
-    }
+    executeDeeplink(commandLine);
   });
+}
+
+function executeDeeplink(commandLine) {
+  if (process.platform == 'win32') {
+    let commandLineString = commandLine.slice(1) + '';
+    let commandLineArgs = commandLineString.split(",");
+    deeplinkingUrl = commandLineArgs[commandLineArgs.length - 1].replace("spinshare-song://", "").replace("/", "");
+  }
+
+  if (win) {
+    if (win.isMinimized()) win.restore();
+    win.focus();
+    win.webContents.executeJavaScript(`NavigateToSongDetail("${deeplinkingUrl}")`);
+  }
 }
 
 function createWindow () {
