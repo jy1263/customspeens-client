@@ -5,7 +5,7 @@
 	"search.input.placeholder": "Rechercher des chansons, tags et profils...",
 	"search.results.users.header": "Usagers",
 	"search.results.songs.header": "Chansons",
-	"search.noresults.text": "Votre recherce n'a pas trouvé de chansons ou usagers. Faites certain d'épeler correctement ou essaie une autre terme.",
+	"search.noresults.text": "Votre recherche n'a pas permis de trouver de chansons ou de profils. Soyez certain de l'épeler correctement ou essayez un autre terme.",
 	
 	"library.installed.header": "Chansons installées",
 	"library.installed.install.title": "Installer",
