@@ -4,6 +4,7 @@ const path = require('path');
 const rimraf = require('rimraf');
 const unzipper = require('unzipper');
 const uniqid = require('uniqid');
+const { app } = require('electron').remote;
 const UserSettings = require('./module.usersettings');
 
 class SRXD {
@@ -25,13 +26,11 @@ class SRXD {
     
         console.log("Extracting Backup.");
     
-        this.backupLocation = path.join(tempDirLocation, "extract-" + uniqid());
+        this.backupLocation = path.join(app.getPath('temp'), "extract-" + uniqid());
         console.info(this.backupLocation);
     
         // Unzip to temp/CustomSpeens/Song
         await fs.createReadStream(filePath).pipe(unzipper.Extract({ path: this.backupLocation })).promise();
-    
-        console.log("Loading Backup.");
     
         // Find SRTB & OGG files
         let srtbFilesInBackupLocation = this.getFilesFromPath(this.backupLocation, ".srtb");
@@ -157,7 +156,6 @@ class SRXD {
                 }
                 catch(err){}
         });
-        RefreshLibrary();
     }
 }
 

@@ -100,7 +100,7 @@
         },
         methods: {
             AddToQueue: function() {
-
+                this.$root.$emit('download', {id: this.$data.id, cover: this.$data.cover, title: this.$data.title, artist: this.$data.artist, downloadPath: this.$data.downloadPath});
             },
             PlayPreview: function() {
 

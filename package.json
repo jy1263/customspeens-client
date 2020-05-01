@@ -14,7 +14,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
-    "electron-dl": "^3.0.0",
+    "electron-download-manager": "^2.1.2",
     "glob": "^7.1.6",
     "ncp": "^2.0.0",
     "rimraf": "^3.0.2",

@@ -9,6 +9,10 @@
 
         <nav>
             <div v-on:click="openExternal('steam://run/1058830');" class="item"><i class="mdi mdi-play-outline"></i></div>
+            <div v-on:click="showDownloadOverlay();" :class="'item ' + (downloadOverlayShown ? 'router-link-active' : '')">
+                <i class="mdi mdi-download-outline"></i>
+                <span class="badge" v-show="downloadQueueCount > 0">{{ downloadQueueCount }}</span>
+            </div>
             <router-link to="/settings" class="item"><i class="mdi mdi-cog-outline"></i></router-link>
         </nav>
     </aside>
@@ -20,7 +24,14 @@
 
     export default {
         name: 'Navigation',
+        props: [
+            'downloadQueueCount',
+            'downloadOverlayShown'
+        ],
         methods: {
+            showDownloadOverlay: function() {
+                this.$root.$emit('toggleDownloadOverlay');
+            },
             openExternal: function(url) {
                 shell.openExternal(url);
             }
@@ -30,9 +41,10 @@
 
 <style scoped lang="less">
     aside {
-        background: rgba(255,255,255,0.1);
+        background: #383C3F;
         display: grid;
         position: fixed;
+        z-index: 50;
         top: 0px;
         left: 0px;
         bottom: 0px;
@@ -41,8 +53,8 @@
         & .item, & .external-item {
             width: 60px;
             height: 60px;
-            opacity: 0.4;
             display: flex;
+            position: relative;
             justify-content: center;
             align-items: center;
             background: transparent;
@@ -50,16 +62,54 @@
             transition: 0.2s ease opacity, 0.2s ease background;
 
             &:hover {
-                opacity: 1;
                 cursor: pointer;
+
+                & .mdi {
+                    opacity: 1;
+                }
             }
             &.router-link-active {
                 opacity: 1;
-                background: linear-gradient(135deg, #fd2f85, #7a34ec);
+                
+                &:before {
+                    transition: 0.2s ease-in-out opacity;
+                    opacity: 1;
+                }
+
+                & .mdi {
+                    opacity: 1;
+                }
             }
 
             & .mdi {
                 font-size: 22px;
+                opacity: 0.4;
+                position: relative;
+                z-index: 2;
+            }
+
+            & .badge {
+                position: absolute;
+                z-index: 3;
+                bottom: 5px;
+                right: 5px;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 2px 6px;
+                border-radius: 5px;
+                background: rgba(255,255,255,0.2);
+            }
+
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                bottom: 0px;
+                right: 0px;
+                background: linear-gradient(135deg, #fd2f85, #7a34ec);
+                opacity: 0;
+                z-index: 0;
             }
         }
     }

@@ -1,11 +1,15 @@
 const { app, protocol, BrowserWindow, ipcMain } = require('electron');
-const { download } = require('electron-dl');
+const DownloadManager = require("electron-download-manager");
 const { createProtocol } = require('vue-cli-plugin-electron-builder/lib');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 let win;
 let deeplinkingUrl;
 let deeplinkingType;
+
+DownloadManager.register({
+    downloadFolder: app.getPath("temp")
+});
 
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }]);
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }]);
@@ -68,8 +72,20 @@ if (isDevelopment) {
   }
 }
 
-ipcMain.on("download", (event, info) => {
-  console.log("Download Request Received");
-  download(BrowserWindow.getFocusedWindow(), info.url, info.properties)
-      .then(dl => win.webContents.send("download-complete", dl.getSavePath()));
+ipcMain.on("download", (event, ipcData) => {
+    console.log("Download: " + ipcData.queueItem.title);
+
+    DownloadManager.download({url: ipcData.queueItem.downloadPath}, (error, dlInfo) => {
+        if (error) {
+            console.log(error);
+            return;
+        }
+        
+        let downloadItem = {
+            id: ipcData.queueItem.id,
+            downloadPath: dlInfo.filePath
+        }
+
+        win.webContents.send("download-complete", downloadItem);
+    });
 });
