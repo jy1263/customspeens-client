@@ -38,7 +38,12 @@ class UserSettings {
   detectGameDirectory() {
     if(process.platform == "win32") {
         return path.join(app.getPath("userData"), "../..", "LocalLow", "Super Spin Digital", "Spin Rhythm XD", "Custom");
-    } else {
+    }
+    if(process.platform == "linux"){
+      const homedir = require('os').homedir();
+      return path.join(homedir, ".local", "share", "Steam", "steamapps", "compatdata", "1058830", "pfx", "drive_c", "users", "steamuser", "AppData", "LocalLow", "Super Spin Digital", "Spin Rhythm XD", "Custom");
+    }
+    else {
         console.error("Unsupported system");
     }
   }
